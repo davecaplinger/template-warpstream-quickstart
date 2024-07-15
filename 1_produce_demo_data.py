@@ -12,16 +12,6 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ADD THESE VARS TO A .ENV FILE
-###
-# sasl_username="<your-warpstream-userid>"
-# sasl_password="<your-warpstream-password>"
-# bootstrap_server="serverless.warpstream.com:9092"
-# raw_data_topic="raw-page-actions"
-# processed_data_topic="page-action-counts"
-#consumer_group_name="warpstream-consumer-v1"
-###
-
 ### WARPSTREAM CONNECTION
 # Define your SASL configuration
 connection = ConnectionConfig(
