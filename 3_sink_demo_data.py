@@ -49,7 +49,7 @@ except duckdb.CatalogException as e:
         raise  # Re-raise the exception if it's not about table existence
 
 def insert_data(con, msg):
-    # Insert data into the DB and overwrite if the page exists.
+    # Insert data into the DB and if the page_id exists, update the count in the existing row
     con.execute(f'''
         INSERT INTO {tablename}(page_id, count) VALUES (?, ?)
         ON CONFLICT (page_id)
