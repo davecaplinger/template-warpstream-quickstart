@@ -42,7 +42,7 @@ try:
             );
         ''')
 except duckdb.CatalogException as e:
-     # If basic check failed check for catalog error as a backup
+     # If basic check failed, check for catalog error as a backup
     if "already exists" in str(e):
         print(f"Table '{tablename}' already exists, skipping creation.")
     else:
