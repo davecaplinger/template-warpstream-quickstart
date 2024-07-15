@@ -30,16 +30,23 @@ sdf = app.dataframe(input_topic) # Turn the data from the input topic into a str
 
 con = duckdb.connect("stats.db") # Connect to a persisted DuckDB database on the filesystem
 
-# Check if the referrals table exists and create it if not
-table_exists = con.execute(
-    f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '\"{tablename}\"')").fetchone()[0]
-if not table_exists:
-    con.execute(f'''
-        CREATE TABLE "{tablename}" (
-            page_id VARCHAR UNIQUE,
-            count INTEGER
-        );
-    ''')
+try:
+    # Do a basic check if the target table exists and create it if not
+    table_exists = con.execute(
+        f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '\"{tablename}\"')").fetchone()[0]
+    if not table_exists:
+        con.execute(f'''
+            CREATE TABLE "{tablename}" (
+                page_id VARCHAR UNIQUE,
+                count INTEGER
+            );
+        ''')
+except duckdb.CatalogException as e:
+     # If basic check failed check for catalog error as a backup
+    if "already exists" in str(e):
+        print(f"Table '{tablename}' already exists, skipping creation.")
+    else:
+        raise  # Re-raise the exception if it's not about table existence
 
 def insert_data(con, msg):
     # Insert data into the DB and overwrite if the page exists.
