@@ -20,7 +20,7 @@ We recommend setting up a Python virtual environment before you install the requ
 You can install the dependencies with the following command:
   
 ```bash
-pip install quixstreams duckdb python-dotenv
+pip install quixstreams duckdb python-dotenv numpy pandas
 ```
 
 ## Step 1: Clone the demo repo 
