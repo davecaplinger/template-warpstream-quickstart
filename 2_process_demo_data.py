@@ -26,16 +26,16 @@ sdf = app.dataframe(input_topic)
 
 sdf = sdf.group_by("page_id")
 
-# Define a function to add the key to the payload
-def add_key_to_payload(value, key, timestamp, headers):
-    value['page_id'] = key
-    return value
-
 def count_messages(value: dict, state: State):
     current_total = state.get('action_count', default=0)
     current_total += 1
     state.set('action_count', current_total)
     return current_total
+
+# Define a function to add the key to the payload
+def add_key_to_payload(value, key, timestamp, headers):
+    value['page_id'] = key
+    return value
 
 # Apply a custom function and inform StreamingDataFrame to provide a State instance to it using "stateful=True"
 sdf["action_count"] = sdf.apply(count_messages, stateful=True)
