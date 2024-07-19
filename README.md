@@ -168,6 +168,8 @@ The line `'sdf = sdf.group_by("page_id")`’—this line rekeys the stream so th
 
 Under the hood, it is maintaining an entry for each message key (in this case page_id) in state, and updating the relevant action count whenever a new message is processed. This means that if the process is interrupted or restarted, it can pick up from where it left off. In essence, the state store serves a similar role to a lightweight database.
 
+This repo includes a sample file [state_example.json](./state_example.json), to give you an idea what the state would look like for this example.
+
 The aggregated results are then written to a second downstream topic using the` to_topic` function.
 
 Keep the processor terminal window open, and open a third window
