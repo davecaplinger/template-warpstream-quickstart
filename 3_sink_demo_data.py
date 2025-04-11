@@ -13,11 +13,11 @@ logger.info("Connecting to WarpStream...")
 # Define your SASL configuration
 connection = ConnectionConfig(
      bootstrap_servers=os.environ["bootstrap_server"],
-     security_protocol="SASL_SSL",
-     sasl_mechanism="PLAIN",  # or any other supported mechanism
-     sasl_username=os.environ["sasl_username"],
-     sasl_password=os.environ["sasl_password"]
- )
+     security_protocol=os.environ.get("security_protocol","SASL_SSL"),  # or "SASL_SSL" if using SSL
+     sasl_mechanism=os.environ.get("sasl_mechanism", "PLAIN"),  # or any other supported mechanism
+     sasl_username=os.environ.get("sasl_username", None),
+     sasl_password=os.environ.get("sasl_password", None)
+)
 
 # Initialize the Quix Application with the connection configuration
 app = Application(consumer_group="warpstream-consumer-v1e",

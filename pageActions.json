@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "timestamp": {"type": "integer"},
+        "user_id": {"type": "string"},
+        "page_id": {"type": "string"},
+        "action": {"type": "string"}
+    }
+}
